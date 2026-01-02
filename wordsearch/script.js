@@ -19,19 +19,19 @@ const deepCopyFunction = inObject =>
     return outObject
 }
 
-var crossword_size = 1
-var crossword_words = []
+var wordsearch_size = 1
+var wordsearch_words = []
 var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var crossword_diagonal;
-var crossword = [];
-var crossword_answer_key = [];
+var wordsearch_diagonal;
+var wordsearch = [];
+var wordsearch_answer_key = [];
 var intersect_offset = 0.9;
 var limit;
 var limit_counter = 1;
 var error = false;
 
-document.getElementById("sizeInput").value = crossword_size;
-document.getElementById("wordsInput").value = crossword_words;
+document.getElementById("sizeInput").value = wordsearch_size;
+document.getElementById("wordsInput").value = wordsearch_words;
 
 for(var n = 0; n < alphabet.length; n++)
 {
@@ -41,13 +41,13 @@ for(var n = 0; n < alphabet.length; n++)
     document.getElementById("images").appendChild(img);
 }
 
-function createCrossword()
+function createWordSearch()
 {
-    crossword_words = document.getElementById("wordsInput").value.toUpperCase().replace(/ /g, "").split(",");
+    wordsearch_words = document.getElementById("wordsInput").value.toUpperCase().replace(/ /g, "").split(",");
     
-    for(var n = 0; n < crossword_words.length; n++)
+    for(var n = 0; n < wordsearch_words.length; n++)
     {
-        if(!crossword_words[n].match(/[a-z]/i) && crossword_words[n] !== "")
+        if(!wordsearch_words[n].match(/[a-z]/i) && wordsearch_words[n] !== "")
         {
             clear();
             alert("Words can only be of English letters.");
@@ -56,21 +56,21 @@ function createCrossword()
         
         var reversed_word = "";
         
-        for(var o = 0; o < crossword_words[n].length; o++)
+        for(var o = 0; o < wordsearch_words[n].length; o++)
         {
-            reversed_word += crossword_words[n].charAt(crossword_words[n].length - o - 1);
+            reversed_word += wordsearch_words[n].charAt(wordsearch_words[n].length - o - 1);
         }
     
-        for(var m = n + 1; m < crossword_words.length; m++)
+        for(var m = n + 1; m < wordsearch_words.length; m++)
         {
-            if(crossword_words[n] === crossword_words[m])
+            if(wordsearch_words[n] === wordsearch_words[m])
             {
                 clear();
                 alert("You cannot use the same word more than once.");
                 return;
             }
             
-            if(reversed_word === crossword_words[m])
+            if(reversed_word === wordsearch_words[m])
             {
                 clear();
                 alert("You cannot have palindrome words.");
@@ -79,48 +79,48 @@ function createCrossword()
         }
     }
     
-    crossword_size = document.getElementById("sizeInput").value;
+    wordsearch_size = document.getElementById("sizeInput").value;
     
-    if(crossword_size < 1 || Math.floor(crossword_size) != crossword_size)
+    if(wordsearch_size < 1 || Math.floor(wordsearch_size) != wordsearch_size)
     {
         clear();
-        alert("Crossword size is invalid.");
+        alert("Word search size is invalid.");
         return;
     }
     
-    document.getElementById("sizeInput").value = crossword_size;
+    document.getElementById("sizeInput").value = wordsearch_size;
     
-    limit = Math.pow(crossword_size, 2) * 1000;
+    limit = Math.pow(wordsearch_size, 2) * 1000;
     
-    crossword_diagonal = document.getElementById("diagonalInput").checked;
-    crossword = [];
-    crossword_answer_key = [];
+    wordsearch_diagonal = document.getElementById("diagonalInput").checked;
+    wordsearch = [];
+    wordsearch_answer_key = [];
     error = false;
     
-    for(var n = 0; n < crossword_size; n++)
+    for(var n = 0; n < wordsearch_size; n++)
     {
-        crossword.push([]);
+        wordsearch.push([]);
     }
     
-    for(var n = 0; n < crossword_words.length; n++)
+    for(var n = 0; n < wordsearch_words.length; n++)
     {
-        crossword_answer_key.push([]);
+        wordsearch_answer_key.push([]);
     }
     
     limit_counter = 1;
     
     wordloop:
-    for(var n = 0; n < crossword_words.length; n++)
+    for(var n = 0; n < wordsearch_words.length; n++)
     {
-        var word = crossword_words[n];
+        var word = wordsearch_words[n];
         
-        var x = Math.round(Math.random() * (crossword_size - 1));
-        var y = Math.round(Math.random() * (crossword_size - 1));
+        var x = Math.round(Math.random() * (wordsearch_size - 1));
+        var y = Math.round(Math.random() * (wordsearch_size - 1));
         
         var direction_x;
         var direction_y;
         
-        if(crossword_diagonal === false)
+        if(wordsearch_diagonal === false)
         {
             direction_x = Math.round(Math.random()) * 2 - 1;
             direction_y = 0;
@@ -151,7 +151,7 @@ function createCrossword()
                 x += direction_x;
                 y += direction_y;
                 
-                if(x < 0 || x > crossword_size - 1 || y < 0 || y > crossword_size - 1)
+                if(x < 0 || x > wordsearch_size - 1 || y < 0 || y > wordsearch_size - 1)
                 {
                     limit_counter++;
                     flag = true;
@@ -159,14 +159,14 @@ function createCrossword()
                 }
             }
             
-            if(crossword[x][y] !== undefined && word.charAt(m) != crossword[x][y])
+            if(wordsearch[x][y] !== undefined && word.charAt(m) != wordsearch[x][y])
             {
                 limit_counter++;
                 flag = true;
                 break characterloop;
             }
             
-            if(word.charAt(m) == crossword[x][y])
+            if(word.charAt(m) == wordsearch[x][y])
             {
                 intersect_flag = true;
             }
@@ -193,11 +193,11 @@ function createCrossword()
         
         else
         {
-            crossword_answer_key[n] = character_list;
+            wordsearch_answer_key[n] = character_list;
             
             for(var m = 0; m < character_list.length; m++)
             {
-                crossword[character_list[m][0]][character_list[m][1]] = word.charAt(m);
+                wordsearch[character_list[m][0]][character_list[m][1]] = word.charAt(m);
             }
             
             limit_counter = 1;
@@ -206,13 +206,13 @@ function createCrossword()
     
     if(!error)
     {
-        for(var n = 0; n < crossword.length; n++)
+        for(var n = 0; n < wordsearch.length; n++)
         {
-            for(var m = 0; m < crossword.length; m++)
+            for(var m = 0; m < wordsearch.length; m++)
             {
-                if(typeof crossword[n][m] === "undefined")
+                if(typeof wordsearch[n][m] === "undefined")
                 {
-                    crossword[n][m] = alphabet.charAt(Math.random() * (alphabet.length - 1));
+                    wordsearch[n][m] = alphabet.charAt(Math.random() * (alphabet.length - 1));
                 }
             }
         }
@@ -222,7 +222,7 @@ function createCrossword()
     
     else
     {
-        alert("Crossword could not be created.\nHint: Try increasing the crossword size.");
+        alert("Word search could not be created.\nHint: Try increasing the wordsearch size.");
     }
 }
 
@@ -235,8 +235,8 @@ var ctx_answer_key = canvas_answer_key.getContext("2d");
 
 function render()
 {
-    canvas.width = crossword_size * 100;
-    canvas.height = crossword_size * 100;
+    canvas.width = wordsearch_size * 100;
+    canvas.height = wordsearch_size * 100;
     canvas_answer_key.width = canvas.width;
     canvas_answer_key.height = canvas.height;
     clear();
@@ -245,15 +245,15 @@ function render()
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000000";
     
-    for(var x = 0; x < crossword.length; x++)
+    for(var x = 0; x < wordsearch.length; x++)
     {
-        for(var y = 0; y < crossword.length; y++)
+        for(var y = 0; y < wordsearch.length; y++)
         {
-            ctx.drawImage(document.getElementById(crossword[x][y]), 100 * x, 100 * y);
+            ctx.drawImage(document.getElementById(wordsearch[x][y]), 100 * x, 100 * y);
         }
     }
     
-    for(var n = 1; n < crossword.length; n++)
+    for(var n = 1; n < wordsearch.length; n++)
     {
         ctx.fillRect(100 * n - line_width / 2, 0, line_width, canvas.height);
         ctx.fillRect(0, 100 * n - line_width / 2, canvas.width, line_width);
@@ -266,14 +266,14 @@ function render()
     
     ctx_answer_key.drawImage(canvas, 0, 0);
     
-    for(var n = 0; n < crossword_answer_key.length; n++)
+    for(var n = 0; n < wordsearch_answer_key.length; n++)
     {
-        if(crossword_answer_key[n].length >= 1)
+        if(wordsearch_answer_key[n].length >= 1)
         {
-            var x1 = 100 * crossword_answer_key[n][0][0] + 50;
-            var y1 = 100 * crossword_answer_key[n][0][1] + 50;
-            var x2 = 100 * crossword_answer_key[n][crossword_answer_key[n].length - 1][0] + 50;
-            var y2 = 100 * crossword_answer_key[n][crossword_answer_key[n].length - 1][1] + 50;
+            var x1 = 100 * wordsearch_answer_key[n][0][0] + 50;
+            var y1 = 100 * wordsearch_answer_key[n][0][1] + 50;
+            var x2 = 100 * wordsearch_answer_key[n][wordsearch_answer_key[n].length - 1][0] + 50;
+            var y2 = 100 * wordsearch_answer_key[n][wordsearch_answer_key[n].length - 1][1] + 50;
             var a = Math.atan2(y2 - y1, x2 - x1);
             
             ctx_answer_key.beginPath();
@@ -281,7 +281,7 @@ function render()
             ctx_answer_key.arc(x2, y2, 50, a - Math.PI / 2, a + Math.PI / 2);
             ctx_answer_key.closePath();
             ctx_answer_key.globalAlpha = 0.5;
-            ctx_answer_key.fillStyle = "hsl(" + (n / crossword_answer_key.length * 360) + ", 100%, 50%)";
+            ctx_answer_key.fillStyle = "hsl(" + (n / wordsearch_answer_key.length * 360) + ", 100%, 50%)";
             ctx_answer_key.fill();
         }
     }

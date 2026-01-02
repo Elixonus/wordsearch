@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Crossword Puzzle Generator</title>
+        <title>Word Search Puzzle Generator</title>
         <link rel="shortcut icon" type="image/png" href="./favicon.ico"/>
     </head>
     
     <body>
-        <h1>Crossword Puzzle Generator</h1>
+        <h1>Word Search Puzzle Generator</h1>
         <p id="sure">Not sure what to create? Use an example.</p>
         <button onclick="loadExample();" id="load">Load Example</button>
-        <p>Size of crossword</p>
+        <p>Size of word search</p>
         <input type="number" id="sizeInput" min="1">
         <br>
-        <p>Words to use in the crossword (separated by comma)</p>
+        <p>Words to use in the word search (separated by comma)</p>
         <input type="text" id="wordsInput">
         <br>
         <p>Allow diagonal words</p>
         <input type="checkbox" id="diagonalInput" checked="true">
         <br>
-        <button class="button" onclick="createCrossword();">Create Crossword</button>
+        <button class="button" onclick="createWordSearch();">Create Word Search</button>
         <br>
         <br>
         <canvas id="canvas" width="0" height="0"></canvas>

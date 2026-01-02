@@ -1,22 +1,22 @@
-# Crossword Puzzle Generator 🧩
+# Word Search Generator 🧩
 
-A tool for generating crossword puzzles instamagically.
+A tool for generating word search puzzles instamagically.
 
-![Crossword Example](./example.png)
+![Word Search Example](./example.png)
 
 ## About
 
-Generates a specific size square crossword with the given words.
+Generates a specific size square word search puzzle with the given words.
 
-The algorithm makes sure that each word given is used once in the crossword.
+The algorithm makes sure that each word given is used once in the puzzle.
 
-If the crossword with the given constraints is not able to be created, it will stop the program and alert the user.
+If the puzzle with the given constraints is not able to be created, it will stop the program and alert the user.
 
 ## Features
 
-Answer key for the crossword with colored, highlighted letters generated as well.
+Answer key for the puzzle with colored, highlighted letters generated as well.
 
-Crossword has a chance of containing diagonal or overlapping words.
+Puzzle has a chance of containing diagonal or overlapping words.
 
 Prevents the user from making palindrome words to avoid player confusion.
 
@@ -26,4 +26,4 @@ Uses the Monte Carlo method and encourages overlap of words by natural selection
 
 Has a limited number of iterations before the current configuration is given up and a new one is attempted.
 
-Every time the algorithm decides to place a word into the crossword, it cannot move it unless the algorithm is reinstantiated.
+Every time the algorithm decides to place a word into the puzzle, it cannot move it unless the algorithm is reinstantiated.
